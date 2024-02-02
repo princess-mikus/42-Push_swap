@@ -6,7 +6,7 @@
 /*   By: mikus <mikus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:16:00 by mikus             #+#    #+#             */
-/*   Updated: 2023/11/27 19:25:31 by mikus            ###   ########.fr       */
+/*   Updated: 2024/02/02 16:33:32 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define PUSHSWAP_H
 # include "libft/libft.h"
 # include <stdio.h>
+# include <errno.h>
+# include <string.h>
+# include <limits.h>
 
 typedef struct s_stack
 {
