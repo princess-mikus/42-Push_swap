@@ -3,25 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mikus <mikus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 18:58:08 by mikus             #+#    #+#             */
-/*   Updated: 2023/11/27 19:39:43 by mikus            ###   ########.fr       */
+/*   Updated: 2024/02/05 13:56:26 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void	start(t_stack *stack_a, t_stack *stack_b)
+int		get_pivot(t_stack *stack, int list_size)
 {
-	int	i = 0;
+	int	pivot;
 
-	printf("%d %d\n", stack_a->number, stack_a->next->number);
-	while (stack_a->next && i++ < 2)
-	{
-		if (stack_a->number < stack_a->next->number)
-			execute_movement("sa", stack_a, stack_b);
-		else
-			execute_movement("pb", stack_a, stack_b);
-	}
+	if (!stack)
+		return (0);
+	if (list_size % 2)
+		pivot = (int)((list_size / 2) + 0.5);
+	else
+		pivot = list_size / 2;
+	return (pivot);
+}
+
+void	quick_sort(t_stack *stack_a, t_stack *stack_b, int list_size)
+{
+	static int pivot = 0;
+
+	get_pivot(stack_a, list_size);	
+	if (stack_a && stack_b)
+		return ;
+	printf("%d\n", pivot);
+}
+
+void	algorithm_select(t_stack *stack_a, t_stack *stack_b, int list_size)
+{
+	quick_sort(stack_a, stack_b, list_size);
 }
