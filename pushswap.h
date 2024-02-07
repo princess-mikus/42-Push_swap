@@ -14,6 +14,7 @@
 # define PUSHSWAP_H
 # include "libft/libft.h"
 # include <stdio.h>
+# include <stdbool.h>
 # include <errno.h>
 # include <string.h>
 # include <limits.h>
@@ -29,7 +30,7 @@ typedef struct s_stack
 	int				number;
 }	t_stack;
 
-int		parse_arguments(int argc, char **argv, t_stack *stack, int *list_size);
+int		parse_arguments(int argc, char **argv, t_stack **stack, int *list_size);
 
 /* LIST MOVEMENTS */
 
@@ -46,4 +47,5 @@ void	reverse_rotate(t_stack *stack);
 void	execute_movement(char const *str, t_stack *stack_a, t_stack *stack_b);
 void	algorithm_select(t_stack *stack_a, t_stack *stack_b, int list_size);
 void	print_list(t_stack *stack);
+void	free_list(t_stack *stack);
 #endif

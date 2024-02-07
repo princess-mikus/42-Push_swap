@@ -22,17 +22,20 @@ int		get_pivot(t_stack *stack, int list_size)
 		pivot = (int)((list_size / 2) + 0.5);
 	else
 		pivot = list_size / 2;
+	printf("%d\n", list_size/2);
 	return (pivot);
 }
 
 void	quick_sort(t_stack *stack_a, t_stack *stack_b, int list_size)
 {
-	static int pivot = 0;
+	static int	pivot = 0;
+	char		*insturction_a;
+	char		*instruction_b;
 
-	get_pivot(stack_a, list_size);	
-	if (stack_a && stack_b)
-		return ;
-	printf("%d\n", pivot);
+	if (!pivot)
+		pivot = get_pivot(stack_a, list_size);
+	if (stack_a->number == pivot)
+		if (stack->a
 }
 
 void	algorithm_select(t_stack *stack_a, t_stack *stack_b, int list_size)

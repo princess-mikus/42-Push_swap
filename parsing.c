@@ -72,7 +72,7 @@ int	check_errors(char **temp, t_stack *stack)
 		i = 0;
 		while (temp[k][i])
 			if (!ft_isdigit(temp[k][i++]))
-				return (1);
+				return (true);
 		k++;
 	}
 	node = stack;
@@ -81,52 +81,26 @@ int	check_errors(char **temp, t_stack *stack)
 		k = -1;
 		while (temp[++k])
 			if (node->number == ft_atoi(temp[k]))
-				return (1);
+				return (true);
 		node = node->next;
 	}
-	return (0);
+	return (false);
 }
 
-void	to_positive(t_stack *stack)
+void	copy_to_stack(t_stack *stack, t_stack *list)
 {
 	t_stack	*node;
+	t_stack	*copy_node;
 
 	node = stack;
+	copy_node = list;
 	while (node)
 	{
-		node->number *= -1;
+		node->number = copy_node->number;
 		node = node->next;
+		copy_node = copy_node->next;
 	}
-}
-
-void	number_to_relative(t_stack *stack, int list_size)
-{
-	int		count;
-	int		current;
-	int		last;
-	t_stack	*node;
-
-	count = -1;
-	last = INT_MAX;
-	printf("%d\n", list_size);
-	while (++count <= list_size)
-	{
-		current = -1;
-		node = stack;
-		while (node)
-		{
-			if (current < node->number && node->number < last)
-				current = node->number;
-			node = node->next;
-		}
-		printf("%p ", node);
-		node = stack;
-		while (node->number != current)
-			node = node->next;
-		node->number = (list_size - count) * -1;
-		last = current;
-	}
-	to_positive(stack);
+	free_list(list);
 }
 
 void	add_to_stack(t_stack **stack, int number)
@@ -142,11 +116,59 @@ void	add_to_stack(t_stack **stack, int number)
 	if (current)
 		current->next = node;
 	else
-		stack = &node;	
+		*stack = node;
 	node->next = NULL;
 }
 
-int	parse_arguments(int argc, char **argv, t_stack *stack, int *list_size)
+t_stack		*copy_list(t_stack *stack, int list_size)
+{
+	int		i;
+	t_stack	*list;
+	t_stack	*node;
+	
+	list = NULL;
+	node = stack;
+	i = -1;
+	while (++i < list_size)
+	{
+		add_to_stack(&list, node->number);
+		node = node->next;
+	}
+	return (list);
+}
+
+void	number_to_relative(t_stack **stack, int list_size)
+{
+	int		count;
+	int		current;
+	int		last;
+	t_stack	*list;
+	t_stack	*node;
+
+	count = -1;
+	last = INT_MAX;
+	list = copy_list(*stack, list_size);
+	while (++count < list_size)
+	{
+		current = INT_MIN;
+		node = *stack;
+		while (node)
+		{
+			if (current < node->number && node->number < last)
+				current = node->number;
+			node = node->next;
+		}
+		node = list;
+		while (node->number != current)
+			node = node->next;
+		node->number = (list_size - count);
+		last = current;
+	}
+	copy_to_stack(*stack, list);
+}
+
+
+int	parse_arguments(int argc, char **argv, t_stack **stack, int *list_size)
 {
 	int		i;
 	int		k;
@@ -160,15 +182,15 @@ int	parse_arguments(int argc, char **argv, t_stack *stack, int *list_size)
 		k = 0;
 		while (temp[k])
 		{
-			if (check_errors(temp, stack))
+			if (check_errors(temp, *stack))
 				return (1);
-			add_to_stack(&stack, ft_atoi(temp[k]));
+			add_to_stack(stack, ft_atoi(temp[k]));
 			*list_size += 1;
 			free(temp[k++]);
 		}
 		free(temp);
 	}
-	printf("\n\n");
 	number_to_relative(stack, *list_size);
+	print_list(*stack);
 	return (0);
 }

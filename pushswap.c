@@ -45,7 +45,7 @@ int	main(int argc, char **argv)
 
 	stack_a = NULL;
 	stack_b = NULL;
-	if (argc == 1 || parse_arguments(argc, argv, stack_a, &list_size))
+	if (argc == 1 || parse_arguments(argc, argv, &stack_a, &list_size))
 	{
 		printf("Error\n");
 		return (free(stack_a), free(stack_b), perror(strerror(EINVAL)), 2);
