@@ -6,11 +6,11 @@
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:17:19 by mikus             #+#    #+#             */
-/*   Updated: 2024/02/05 14:23:54 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:06:32 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pushswap.h"
+#include "push_swap.h"
 /*
 void	add_to_stack(t_stack *stack, int number)
 {
@@ -191,6 +191,5 @@ int	parse_arguments(int argc, char **argv, t_stack **stack, int *list_size)
 		free(temp);
 	}
 	number_to_relative(stack, *list_size);
-	print_list(*stack);
 	return (0);
 }

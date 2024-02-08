@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mikus <mikus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 18:45:06 by mikus             #+#    #+#             */
-/*   Updated: 2023/11/27 19:21:36 by mikus            ###   ########.fr       */
+/*   Updated: 2024/02/08 10:43:57 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pushswap.h"
+#include "push_swap.h"
 
 void	free_array(void	**array)
 {

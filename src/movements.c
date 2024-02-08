@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mikus <mikus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:23:11 by mikus             #+#    #+#             */
-/*   Updated: 2023/11/22 18:15:09 by mikus            ###   ########.fr       */
+/*   Updated: 2024/02/08 14:16:06 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pushswap.h"
+#include "push_swap.h"
 
 void	swap(t_stack *stack)
 {
@@ -34,7 +34,10 @@ void	push(t_stack **src, t_stack **dest)
 		return ;
 	new_node = (t_stack *)malloc(sizeof(t_stack));
 	new_node->number = to_push->number;
-	new_node->next = *dest;
+	if (dest)
+		new_node->next = *dest;
+	else
+		new_node->next = NULL;
 	*dest = new_node;
 	*src = to_push->next;
 	free(to_push);
@@ -42,20 +45,24 @@ void	push(t_stack **src, t_stack **dest)
 
 void	rotate(t_stack	*stack)
 {
+	t_stack	*head;
 	int	new_last;
 
 	new_last = stack->number;
+	head = stack;
 	while (stack->next)
 	{
 		stack->number = stack->next->number;
 		stack = stack->next;
 	}
 	stack->number = new_last;
+	stack = head;
 }
 
 void	reverse_rotate(t_stack *stack)
 {
 	t_stack	*first;
+	t_stack	*head;
 	int		previous_number;
 	int		temp;
 

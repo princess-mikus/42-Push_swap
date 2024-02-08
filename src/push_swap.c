@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pushswap.c                                         :+:      :+:    :+:   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:05:20 by mikus             #+#    #+#             */
-/*   Updated: 2024/02/05 14:16:52 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:10:12 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pushswap.h"
+#include "push_swap.h"
 
 void	print_list(t_stack *stack)
 {
@@ -19,7 +19,10 @@ void	print_list(t_stack *stack)
 	current = stack;
 	while (current)
 	{
-		printf("%d\n", current->number);
+		if (current->number)
+			printf("%d\n", current->number);
+		else
+			printf("(NULL)");
 		current = current->next;
 	}
 	printf("\n");
@@ -48,12 +51,19 @@ int	main(int argc, char **argv)
 	if (argc == 1 || parse_arguments(argc, argv, &stack_a, &list_size))
 	{
 		printf("Error\n");
-		return (free(stack_a), free(stack_b), perror(strerror(EINVAL)), 2);
+		return (free(stack_a), free(stack_b), 0);
 	}
 	/* TESTING */
-	printf("\nSTACK:\n");
 	algorithm_select(stack_a, stack_b, list_size);
+	/* Printing */
+/*
+	printf("\n\n");
+	printf("STACK A:\n");
 	print_list(stack_a);
+	printf("\n\n");
+	printf("STACK B:\n");
+	print_list(stack_b);
+*/
 	/* FREEING */
 	free_list(stack_a);
 	free_list(stack_b);

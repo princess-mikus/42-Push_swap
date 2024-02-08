@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   order_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mikus <mikus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:39:01 by mikus             #+#    #+#             */
-/*   Updated: 2023/12/14 14:45:55 by mikus            ###   ########.fr       */
+/*   Updated: 2024/02/08 12:21:27 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pushswap.h"
+#include "push_swap.h"
 
-int	is_in_right_order(t_stack *stack_a, t_stack *stack_b)
+bool check_order(t_stack *stack_a, t_stack *stack_b)
 {
 	int		current;
 	t_stack	*node;
@@ -20,7 +20,7 @@ int	is_in_right_order(t_stack *stack_a, t_stack *stack_b)
 	if (stack_b)
 		return (false);
 	node = stack_a;
-	current = 0;
+	current = 1;
 	while (node)
 	{
 		if (current++ != node->number)
