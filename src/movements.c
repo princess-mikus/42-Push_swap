@@ -6,7 +6,7 @@
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:23:11 by mikus             #+#    #+#             */
-/*   Updated: 2024/02/08 14:16:06 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:19:22 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	push(t_stack **src, t_stack **dest)
 		return ;
 	new_node = (t_stack *)malloc(sizeof(t_stack));
 	new_node->number = to_push->number;
-	if (dest)
+	if (*dest)
 		new_node->next = *dest;
 	else
 		new_node->next = NULL;
@@ -62,7 +62,6 @@ void	rotate(t_stack	*stack)
 void	reverse_rotate(t_stack *stack)
 {
 	t_stack	*first;
-	t_stack	*head;
 	int		previous_number;
 	int		temp;
 
