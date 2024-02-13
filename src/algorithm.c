@@ -72,6 +72,7 @@ bool	check_b_partial_order(t_stack *stack)
 	{
 		if (stack->number < stack->next->number)
 			return (false);
+		stack = stack->next;
 	}
 	return (true);
 }
@@ -152,20 +153,23 @@ bool	quick_sort(t_stack **stack_a, t_stack **stack_b, int list_size)
 	}
 	if (!check_b_partial_order(*stack_b))
 	{
-		print_list(b);
 		if (b->next && b->next->number > b->number)
 			execute_movement("sb", stack_a, stack_b);
-		else if (b->next)
+		else if (b->next->next)
 		{
 			while (b->number > get_last_number(*stack_b))
 			{
-				execute_movement("rrb", stack_a, stack_b);
 				execute_movement("sb", stack_a, stack_b);
+				execute_movement("rrb", stack_a, stack_b);
 			}
 			while (b->number < b->next->number)
 				execute_movement("rb", stack_a, stack_b);
 		}
 	}
+	printf("Lista 1\n");
+	print_list(*stack_a);
+	printf("Lista 2\n");
+	print_list(*stack_b);
 	return (quick_sort(stack_a, stack_b, list_size));
 }
 
