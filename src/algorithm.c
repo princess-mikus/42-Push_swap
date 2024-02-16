@@ -1,14 +1,16 @@
 /* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/27 18:58:08 by mikus             #+#    #+#             */
-/*   Updated: 2024/02/12 13:01:16 by fcasaubo         ###   ########.fr       */
+/*   Created: 2024/02/12 13:01:16 by fcasaubo          #+#    #+#             */
+/*   Updated: 2024/02/16 14:05:16 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "src/*.c"
 #include "push_swap.h"
 
 int		get_pivot(t_stack *stack, int list_size)
@@ -106,6 +108,19 @@ bool	is_biggest(t_stack *stack, int number)
 	}
 	return (true);
 }
+
+int		get_biggest(t_stack *stack)
+{
+	while (stack)
+	{
+		if (is_biggest(stack, stack->number))
+			return (stack->number);
+		stack = stack->next;
+	}
+	return (0);
+}
+
+
 bool	quick_sort(t_stack **stack_a, t_stack **stack_b, int list_size)
 {
 	static int	pivot = 0;
@@ -145,31 +160,55 @@ bool	quick_sort(t_stack **stack_a, t_stack **stack_b, int list_size)
 		if (check_partial_order(*stack_a, false) && check_partial_order(*stack_b, true))
 		{
 			while (!check_order(*stack_a, *stack_b))
+			{
+				//printf("BOOL:%d\n", check_order(*stack_a, *stack_b));
 				execute_movement("pa", stack_a, stack_b);
+			}
 			return (true);
 		}
 		if (!check_partial_order(*stack_a, false))
 			execute_movement("sa", stack_a, stack_b);
 	}
-	if (!check_b_partial_order(*stack_b))
-	{
-		if (b->next && b->next->number > b->number)
-			execute_movement("sb", stack_a, stack_b);
-		else if (b->next->next)
-		{
-			while (b->number > get_last_number(*stack_b))
-			{
-				execute_movement("sb", stack_a, stack_b);
-				execute_movement("rrb", stack_a, stack_b);
-			}
-			while (b->number < b->next->number)
-				execute_movement("rb", stack_a, stack_b);
-		}
-	}
 	printf("Lista 1\n");
 	print_list(*stack_a);
 	printf("Lista 2\n");
 	print_list(*stack_b);
+	if (!check_b_partial_order(*stack_b))
+	{
+		if (b->number < get_last_number(*stack_b))
+				execute_movement("rb", stack_a, stack_b);
+		else if (b->number == get_biggest(*stack_b) && b->next)
+		{
+			if (b->number < b->next->number)
+			{
+				execute_movement("rb", stack_a, stack_b);
+				while (b->number < b->next->number)
+				{
+					execute_movement("sb", stack_a, stack_b);
+					execute_movement("rb", stack_a, stack_b);
+				}
+				while (b->number != pivot - 1)
+				{
+					execute_movement("rrb", stack_a, stack_b);
+					if (b->number < b->next->number)
+						execute_movement("sb", stack_a, stack_b);	
+				}
+			}
+		}
+		else
+		{
+			if (b->number < b->next->number)
+				execute_movement("sb", stack_a, stack_b);
+			while (b->number < get_last_number(*stack_b))
+			{
+				execute_movement("rb", stack_a, stack_b);
+				execute_movement("sb", stack_a, stack_b);
+			}
+			while (get_last_number(*stack_b) > b->number)
+				execute_movement("rrb", stack_a, stack_b);
+		}
+	}
+	sleep(1);
 	return (quick_sort(stack_a, stack_b, list_size));
 }
 
