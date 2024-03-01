@@ -6,7 +6,7 @@
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:05:20 by mikus             #+#    #+#             */
-/*   Updated: 2024/02/08 14:10:12 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/03/01 12:30:07 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,32 @@ void	print_list(t_stack *stack)
 	printf("\n");
 }
 
+/*
+void    print_list(t_stack **stack_a, t_stack **stack_b)
+{
+    t_stack *current_b;
+    t_stack *current_a;
+    int     cubo;
+    current_a = *stack_a;
+    current_b = *stack_b;
+    printf("[index]\t[stack_a]\t[index]\t[stack_b]\n");
+    while (current_a)
+    {
+        cubo = -1;
+        printf("\t|");
+        while (++cubo < current_a->number)
+            printf("▧");
+        cubo = -1;
+        printf("\t|");
+        while (++cubo < current_b->number)
+            printf("▧");
+        printf("\n");
+        current_a = current_a->next;
+        current_b = current_b->next;
+    }
+    printf("\n");
+}
+*/
 void	free_list(t_stack *stack)
 {
 	t_stack	*next;

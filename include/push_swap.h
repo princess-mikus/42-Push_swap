@@ -6,12 +6,13 @@
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:16:00 by mikus             #+#    #+#             */
-/*   Updated: 2024/02/08 14:15:50 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/03/01 12:30:29 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
+# include "list.h"
 # include "libft.h"
 # include <stdio.h>
 # include <stdbool.h>
@@ -22,12 +23,6 @@
 # ifndef THRESHOLD
 #  define THRESHOLD 10
 # endif
-
-typedef struct s_stack
-{
-	struct s_stack	*next;
-	int				number;
-}	t_stack;
 
 int		parse_arguments(int argc, char **argv, t_stack **stack, int *list_size);
 

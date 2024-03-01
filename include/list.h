@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   list.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 18:45:06 by mikus             #+#    #+#             */
-/*   Updated: 2024/03/01 12:00:56 by fcasaubo         ###   ########.fr       */
+/*   Created: 2024/02/27 12:24:09 by fcasaubo          #+#    #+#             */
+/*   Updated: 2024/03/01 10:40:33 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-
-void	free_array(void	**array)
+typedef struct s_stack
 {
-	int	i;
+	struct s_stack	*next;
+	int				number;
+}	t_stack;
 
-	i = -1;
-	while (array[++i])
-		free(array[i]);
-	free(array);
-}

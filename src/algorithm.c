@@ -6,7 +6,7 @@
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:01:16 by fcasaubo          #+#    #+#             */
-/*   Updated: 2024/02/20 15:29:55 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/03/01 12:34:00 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,12 @@ int		get_pivot(t_stack *stack, int list_size)
 	return (pivot);
 }
 
-/*
-void	get_positions(int **positions, t_stack *node)
-{
-}
-*/
 bool	three_sort(t_stack	**stack)
 {
 	t_stack	*node;
 	int		positions[3];
 
 	//get_positions(&positions);
-	positions[0] = 1;
-	positions[1] = 2;
-	positions[2] = 3;
 	node = *stack;
 	if (node->number == positions[0] && positions[2] && node->next->number == positions[2])
 		execute_movement("sa", stack, NULL);
@@ -97,141 +89,94 @@ bool	check_partial_order(t_stack *stack, bool inverse)
 	return (true);
 }
 
-bool	is_biggest(t_stack *stack, int number)
+bool	search_number(t_stack *stack_a, int *winner, int price, int list_size)
 {
-	while (stack)
+	t_stack		*current;
+	static int	number = 0;
+	static int	minus = 0;
+	static int	iteration = 0;
+
+	current = stack_a->next;
+	number = stack_a->number;
+	while (current)
 	{
-		if (stack->number > number)
-			return (false);
-		stack = stack->next;
+		if ((current->number == number + 1 && !minus) || (current->number == number - 1 && minus))
+		{
+			if (current->number == number)
+				minus = 0;
+			break ;
+		}
+		current = current->next;
+		price++;
 	}
-	return (true);
+	if (iteration++ == 0)
+		return (search_number(stack_a, winner, price, list_size));
+	if (winner[1] > price)
+		return (true);
+	return (false);
 }
 
-int		get_biggest(t_stack *stack)
+int		find_cheapest_packet(t_stack *stack_a, int list_size)
 {
-	while (stack)
-	{
-		if (is_biggest(stack, stack->number))
-			return (stack->number);
-		stack = stack->next;
-	}
-	return (0);
-}
+	t_stack	*a;
+	int		price;
+	int		winner[2];
 
+	a = stack_a;
+	winner[0] = 0;
+	winner[1] = INT_MAX;
+	price = 0;
+	while (a)
+	{
+		if (a->number < list_size - THRESHOLD - 1 && a->number != 1)
+		{
+			if (search_number(stack_a, winner, price, list_size))
+				winner[0] = a->number;
+		}
+		a = a->next;
+		price++;
+	}
+	return (winner[0]);
+}
 
 bool	quick_sort(t_stack **stack_a, t_stack **stack_b, int list_size)
 {
-	static int	pivot = 0;
-	int			i;
-	t_stack		*a;
-	t_stack		*b;
+	t_stack	*a;
+	t_stack	*b;
+	int		number;
+	int		i;
+	static int	temp = 0;
 
-	if (check_order(*stack_a, *stack_b))
-		return (true);
-	a = *stack_a;
-	b = *stack_b;
-	if (!pivot)
-		pivot = get_pivot(*stack_a, list_size);
-	if (!check_partial_order(*stack_a, false) && a->number != pivot)
+	number = find_cheapest_packet(*stack_a, list_size);
+	i = 0;
+	while (i < 3)
 	{
-		if (a->number < pivot)
+		a = *stack_a;
+		b = *stack_b;
+		if (a->number == number || a->number == number - 1 || a->number == number + 1)
+		{
 			execute_movement("pb", stack_a, stack_b);
-		else if (a->next->number == pivot && check_partial_order(a->next->next, false))
-			execute_movement("sa", stack_a, stack_b);
-		else if (get_last_number(*stack_a) < a->number)
+			i++;
+		}
+		else
 			execute_movement("ra", stack_a, stack_b);
-		else
-		{
-			i = 1;
-			while(get_last_number(*stack_a) > a->number)
-			{
-				execute_movement("rra", stack_a, stack_b);
-				execute_movement("sa", stack_a, stack_b);
-				i++;
-			}
-			while (i--)
-				execute_movement("ra", stack_a, stack_b);
-		}
 	}
-	else 
-	{
-		if (check_partial_order(*stack_a, false) && check_partial_order(*stack_b, true))
-		{
-			while (!check_order(*stack_a, *stack_b))
-				execute_movement("pa", stack_a, stack_b);
-			return (true);
-		}
-		if (!check_partial_order(*stack_a, false))
-			execute_movement("sa", stack_a, stack_b);
-	}
-	//printf("Lista 1\n");
-	//print_list(*stack_a);
-	printf("Lista 2\n");
-	print_list(*stack_b);
-	if (!check_b_partial_order(*stack_b))
-	{
-		if (b->number < b->next->number)
-		{
-			if ()
-				execute_movement("sb", stack_a, stack_b);
-			if (!check_b_partial_order(*stack_b) && b->number > get_last_number(*stack_b))
-			{
-				while (b->number > get_last_number(*stack_b))
-				{
-					execute_movement("rrb", stack_a, stack_b);
-					execute_movement("sb", stack_a, stack_b);
-				}
-				while (b->number < get_last_number(*stack_b))
-					execute_movement("rb", stack_a, stack_b);
-			}
-			else if (!check_b_partial_order(*stack_b))
-			{
-				i = 0;
-				while (b->number < get_last_number(*stack_b))
-				{
-					execute_movement("rrb", stack_a, stack_b);
-					execute_movement("sb", stack_a, stack_b);
-					i++;
-				}
-				while (i-- >= 0)
-					execute_movement("rb", stack_a, stack_b);
-			}
-		}
-		else
-		{
-			i = 0;
-			while (b->number > b->next->number && !check_b_partial_order(*stack_b))
-				execute_movement("rb", stack_a, stack_b);
-			if (!check_b_partial_order(*stack_b))
-			{
-				if (b->number < b->next->number)
-					execute_movement("sb", stack_a, stack_b);
-				while (b->number > get_last_number(*stack_b))
-				{
-					execute_movement("rrb", stack_a, stack_b);
-					execute_movement("sb", stack_a, stack_b);
-					i++;
-				}
-				while (i-- >= 0)
-				{
-					if (b->number > b->next->number)
-						execute_movement("sb", stack_a, stack_b);
-					execute_movement("rb", stack_a, stack_b);
-				}
-			}
-		}
-	}
-	//sleep(1);
-	return (quick_sort(stack_a, stack_b, list_size));
+	while (temp++ < 5)
+		quick_sort(stack_a, stack_b, list_size);
+	return (true);
 }
 
 void	algorithm_select(t_stack *stack_a, t_stack *stack_b, int list_size)
 {
-	if (list_size <= 3)
+	if (check_order(stack_a, stack_b))
+		return ;
+	else if (list_size <= 3)
 		three_sort(&stack_a);
 	else
 		quick_sort(&stack_a, &stack_b, list_size);
-	//print_list(stack_a);
-	//print_list(stack_b);
+	//print_list(&stack_a, &stack_b);
+	printf("Lista 1\n");
+	print_list(stack_a);
+	printf("Lista 2\n");
+	print_list(stack_b);
 }
