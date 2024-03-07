@@ -6,7 +6,7 @@
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:05:20 by mikus             #+#    #+#             */
-/*   Updated: 2024/03/01 12:30:07 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:34:44 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ int	main(int argc, char **argv)
 	print_list(stack_b);
 */
 	/* FREEING */
-	free_list(stack_a);
-	free_list(stack_b);
+	//free_list(stack_a);
+	//free_list(stack_b);
 }

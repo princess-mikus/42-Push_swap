@@ -6,7 +6,7 @@
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:16:00 by mikus             #+#    #+#             */
-/*   Updated: 2024/03/01 12:30:29 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:31:49 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #  define THRESHOLD 10
 # endif
 
-int		parse_arguments(int argc, char **argv, t_stack **stack, int *list_size);
+bool	parse_arguments(int argc, char **argv, t_stack **stack, int *list_size);
 
 /* LIST MOVEMENTS */
 
