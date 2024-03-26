@@ -6,7 +6,7 @@
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:23:11 by mikus             #+#    #+#             */
-/*   Updated: 2024/02/12 13:19:22 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:16:52 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,38 @@ void	swap(t_stack *stack)
 	}
 }
 
-void	push(t_stack **src, t_stack **dest)
+void	push(t_stack *src, t_stack *dst)
 {
-	t_stack	*new_node;
-	t_stack	*to_push;
+	int		to_keep;
+	int		temp;
+	t_stack	*dst_head;
 
-	to_push = *src;
-	if (!to_push)
-		return ;
-	new_node = (t_stack *)malloc(sizeof(t_stack));
-	new_node->number = to_push->number;
-	if (*dest)
-		new_node->next = *dest;
-	else
-		new_node->next = NULL;
-	*dest = new_node;
-	*src = to_push->next;
-	free(to_push);
+	dst_head = dst;
+	to_keep = dst->number;
+	while (dst && to_keep != 0)
+	{
+		temp = dst->next->number;
+		dst->next->number = to_keep;
+		to_keep = temp;
+		dst = dst->next;
+	}
+	dst_head->number = src->number;
+	while (src->next && src->next->number != 0)
+	{
+		src->number = src->next->number;
+		src = src->next;
+	}
+	src->number = 0;
 }
 
 void	rotate(t_stack	*stack)
 {
 	t_stack	*head;
-	int	new_last;
+	int		new_last;
 
 	new_last = stack->number;
 	head = stack;
-	while (stack->next)
+	while (stack->next && stack->next->number)
 	{
 		stack->number = stack->next->number;
 		stack = stack->next;
@@ -67,7 +72,7 @@ void	reverse_rotate(t_stack *stack)
 
 	first = stack;
 	previous_number = first->number;
-	while (stack)
+	while (stack && stack->number)
 	{
 		temp = stack->number;
 		stack->number = previous_number;

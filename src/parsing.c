@@ -6,26 +6,35 @@
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:17:19 by mikus             #+#    #+#             */
-/*   Updated: 2024/03/07 13:32:58 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:44:01 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	check_errors(char **temp, t_stack *stack)
+bool	check_overflow(const char *str)
+{
+	if (ft_latoi(str) > INT_MAX || ft_latoi(str) < INT_MIN)
+		return (true);
+	return (false);
+}
+
+bool	check_errors(char **temp, t_stack *stack)
 {
 	int		i;
 	int		k;
 	t_stack	*node;
 
-	k = 0;
-	while (temp[k])
+	k = -1;
+	while (temp[++k])
 	{
 		i = 0;
-		while (temp[k][i])
-			if (!ft_isdigit(temp[k][i++]))
+		if (check_overflow(temp[k]))
+			return (true);
+		while (temp[k][i] || i == 0)
+			if ((!ft_isdigit(temp[k][i]) && (temp[k][i] != '-' \
+			|| (!ft_isdigit(temp[k][i + 1]) && !temp[k][i + 1]))) || ++i == -1)
 				return (true);
-		k++;
 	}
 	node = stack;
 	while (node)
@@ -55,54 +64,19 @@ void	copy_to_stack(t_stack *stack, t_stack *list)
 	free_list(list);
 }
 
-void	add_to_stack(t_stack **stack, int number)
-{
-	t_stack	*node;
-	t_stack	*current;
-
-	node = (t_stack *)malloc(sizeof(t_stack));
-	node->number = number;
-	current = *stack;
-	while (current && current->next)
-		current = current->next;
-	if (current)
-		current->next = node;
-	else
-		*stack = node;
-	node->next = NULL;
-}
-
-t_stack		*copy_list(t_stack *stack, int list_size)
-{
-	int		i;
-	t_stack	*list;
-	t_stack	*node;
-	
-	list = NULL;
-	node = stack;
-	i = -1;
-	while (++i < list_size)
-	{
-		add_to_stack(&list, node->number);
-		node = node->next;
-	}
-	return (list);
-}
-
 void	number_to_relative(t_stack **stack, int list_size)
 {
-	int		count;
-	int		current;
-	int		last;
-	t_stack	*list;
-	t_stack	*node;
+	static int		count = -1;
+	long			current;
+	long			last;
+	t_stack			*list;
+	t_stack			*node;
 
-	count = -1;
-	last = INT_MAX;
+	last = (long)INT_MAX + 1;
 	list = copy_list(*stack, list_size);
 	while (++count < list_size)
 	{
-		current = INT_MIN;
+		current = (long)INT_MIN - 1;
 		node = *stack;
 		while (node)
 		{
@@ -119,7 +93,6 @@ void	number_to_relative(t_stack **stack, int list_size)
 	copy_to_stack(*stack, list);
 }
 
-
 bool	parse_arguments(int argc, char **argv, t_stack **stack, int *list_size)
 {
 	int		i;
@@ -135,7 +108,7 @@ bool	parse_arguments(int argc, char **argv, t_stack **stack, int *list_size)
 		while (temp[k])
 		{
 			if (check_errors((temp + k), *stack))
-				return (true);
+				return (free_array((void *)temp + k), true);
 			add_to_stack(stack, ft_atoi(temp[k]));
 			*list_size += 1;
 			free(temp[k++]);

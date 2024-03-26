@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_write_character.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 10:52:11 by fcasaubo          #+#    #+#             */
-/*   Updated: 2023/05/11 10:52:24 by fcasaubo         ###   ########.fr       */
+/*   Created: 2023/06/06 11:46:24 by fcasaubo          #+#    #+#             */
+/*   Updated: 2023/06/19 11:36:59 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_write_character(va_list lst)
 {
-	size_t	i;
+	char	last;
+	int		count;
 
-	i = 0;
-	while (*(s + i))
-		i++;
-	return (i);
+	last = (char)va_arg(lst, int);
+	count = write(1, &last, 1);
+	return (count);
 }

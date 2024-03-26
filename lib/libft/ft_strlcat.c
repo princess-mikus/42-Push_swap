@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   order_check.c                                      :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/14 14:39:01 by mikus             #+#    #+#             */
-/*   Updated: 2024/02/16 13:31:57 by fcasaubo         ###   ########.fr       */
+/*   Created: 2023/05/11 10:53:20 by fcasaubo          #+#    #+#             */
+/*   Updated: 2023/05/11 10:53:30 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-bool check_order(t_stack *stack_a, t_stack *stack_b)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	int		current;
-	t_stack	*node;
+	size_t	i;
+	size_t	dlen;
+	size_t	slen;
 
-	if (stack_b)
-		return (false);
-	node = stack_a;
-	current = 1;
-	while (node)
-	{
-		if (current++ != node->number)
-			return (false);
-		node = node->next;
-	}
-	return (true);
+	i = -1;
+	if (dstsize == 0 && (!dst || !src))
+		return (0);
+	dlen = ft_strlen(dst);
+	slen = ft_strlen(src);
+	if (dstsize <= dlen)
+		return (ft_strlen(src) + dstsize);
+	while (++i < (dstsize - dlen - 1) && src[i])
+		dst[dlen + i] = src[i];
+	dst[dlen + i] = '\0';
+	return (dlen + slen);
 }

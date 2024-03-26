@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_write_hex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 10:52:11 by fcasaubo          #+#    #+#             */
-/*   Updated: 2023/05/11 10:52:24 by fcasaubo         ###   ########.fr       */
+/*   Created: 2023/06/06 12:02:33 by fcasaubo          #+#    #+#             */
+/*   Updated: 2023/06/15 12:50:49 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_write_hex(va_list lst, char c)
 {
-	size_t	i;
+	int	number;
 
-	i = 0;
-	while (*(s + i))
-		i++;
-	return (i);
+	number = va_arg(lst, int);
+	if (c == 'x')
+		return (ft_putnbr_hex_fd(number, 1, 0));
+	else
+		return (ft_putnbr_hex_fd(number, 1, 1));
 }

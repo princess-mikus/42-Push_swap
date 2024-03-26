@@ -6,23 +6,23 @@
 /*   By: fcasaubo <fcasaubo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:01:24 by mikus             #+#    #+#             */
-/*   Updated: 2024/03/07 15:24:55 by fcasaubo         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:55:24 by fcasaubo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-// REPLACE PRINTF FOR FT_PRINTF
+
 void	execute_movement(char const *str, t_stack **stack_a, t_stack **stack_b)
 {
-	printf("%s\n", str);
+	ft_printf("%s\n", str);
 	if (!ft_strncmp(str, "sa", 3))
 		return (swap(*stack_a));
 	else if (!ft_strncmp(str, "sb", 3))
 		return (swap(*stack_b));
 	else if (!ft_strncmp(str, "pa", 3))
-		return (push(stack_b, stack_a));
+		return (push(*stack_b, *stack_a));
 	else if (!ft_strncmp(str, "pb", 3))
-		return (push(stack_a, stack_b));
+		return (push(*stack_a, *stack_b));
 	else if (!ft_strncmp(str, "ra", 3))
 		return (rotate(*stack_a));
 	else if (!ft_strncmp(str, "rb", 3))
